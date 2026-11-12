@@ -26,6 +26,7 @@ namespace RepairCostApp.Forms
         {
             try
             {
+                dataGridViewData.DataSource = null; 
                 dataGridViewData.DataSource = _contractorRepository.ReadContractors();
             }
             catch (Exception ex)
@@ -39,7 +40,8 @@ namespace RepairCostApp.Forms
             try
             {
                 var form = _container.Resolve<FormContractorEdit>();
-                if (form.ShowDialog() == DialogResult.OK) LoadList();
+                if (form.ShowDialog() == DialogResult.OK)
+                    LoadList(); 
             }
             catch (Exception ex) { MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
@@ -51,7 +53,8 @@ namespace RepairCostApp.Forms
             {
                 var form = _container.Resolve<FormContractorEdit>();
                 form.ContractorId = findId;
-                if (form.ShowDialog() == DialogResult.OK) LoadList();
+                if (form.ShowDialog() != DialogResult.OK)
+                    LoadList();
             }
             catch (Exception ex) { MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }

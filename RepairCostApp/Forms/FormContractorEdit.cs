@@ -1,7 +1,7 @@
 ﻿using RepairCostApp.Repositories;
 using RepairCostApp.Entities;
-using System.ComponentModel;
 using System;
+using System.ComponentModel;
 using System.Windows.Forms;
 
 namespace RepairCostApp.Forms
@@ -16,6 +16,7 @@ namespace RepairCostApp.Forms
             InitializeComponent();
             _contractorRepository = contractorRepository ?? throw new ArgumentNullException(nameof(contractorRepository));
         }
+
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public int ContractorId
         {
@@ -23,9 +24,12 @@ namespace RepairCostApp.Forms
             {
                 _contractorId = value;
                 var contractor = _contractorRepository.ReadContractorById(value);
-                textBoxName.Text = contractor.Name;
-                textBoxINN.Text = contractor.INN;
-                textBoxPhone.Text = contractor.Phone;
+                if (contractor != null)
+                {
+                    textBoxName.Text = contractor.Name;
+                    textBoxINN.Text = contractor.INN;
+                    textBoxPhone.Text = contractor.Phone;
+                }
             }
         }
 

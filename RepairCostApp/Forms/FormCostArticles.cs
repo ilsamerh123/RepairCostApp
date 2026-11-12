@@ -1,7 +1,8 @@
-﻿using RepairCostApp.Repositories;
-using Unity;
-using System;
+﻿using System;
 using System.Windows.Forms;
+using RepairCostApp.Repositories;
+using RepairCostApp.Repositories.Implementations;
+using Unity;
 
 namespace RepairCostApp.Forms
 {
@@ -21,8 +22,15 @@ namespace RepairCostApp.Forms
 
         private void LoadList()
         {
-            try { dataGridViewData.DataSource = _articleRepository.ReadCostArticles(); }
-            catch (Exception ex) { MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+            try
+            {
+                dataGridViewData.DataSource = null;
+                dataGridViewData.DataSource = _articleRepository.ReadCostArticles();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка при загрузке", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void ButtonAdd_Click(object sender, EventArgs e)
