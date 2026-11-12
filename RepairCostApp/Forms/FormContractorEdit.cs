@@ -33,7 +33,6 @@ namespace RepairCostApp.Forms
         {
             try
             {
-                // Проверка на пустые поля
                 if (string.IsNullOrWhiteSpace(textBoxName.Text) || string.IsNullOrWhiteSpace(textBoxINN.Text))
                 {
                     throw new Exception("Поля 'Имя' и 'ИНН' обязательны для заполнения.");

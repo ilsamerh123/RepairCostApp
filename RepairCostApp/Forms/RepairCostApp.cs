@@ -15,7 +15,6 @@ namespace RepairCostApp.Forms
             _container = container ?? throw new ArgumentNullException(nameof(container));
         }
 
-        // --- Справочники ---
         private void RoomsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try { _container.Resolve<FormRooms>().ShowDialog(); }
@@ -28,12 +27,22 @@ namespace RepairCostApp.Forms
             catch (Exception ex) { MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
 
-        // --- Операции ---
         private void RepairWorksToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // Здесь будет ошибка, пока мы не создадим форму FormRepairWorks. 
-            // Это нормально, мы сделаем её на следующем шаге!
             try { _container.Resolve<FormRepairWorks>().ShowDialog(); }
+            catch (Exception ex) { MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+        }
+        
+        private void CostArticlesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try { _container.Resolve<FormCostArticles>().ShowDialog(); }
+            catch (Exception ex) { MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+        }
+
+        
+        private void EstimatesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try { _container.Resolve<FormEstimates>().ShowDialog(); }
             catch (Exception ex) { MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
     }

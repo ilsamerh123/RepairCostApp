@@ -10,26 +10,22 @@ namespace RepairCostApp.Forms
     public partial class FormRoomEdit : Form
     {
         private readonly IRoomRepository _roomRepository;
-        private int? _roomId; // Если null - добавление, иначе - редактирование
+        private int? _roomId; 
 
-        // Внедрение зависимости
         public FormRoomEdit(IRoomRepository roomRepository)
         {
             InitializeComponent();
             _roomRepository = roomRepository ?? throw new ArgumentNullException(nameof(roomRepository));
 
-            // Заполняем ComboBox типами помещений
             comboBoxType.DataSource = Enum.GetValues(typeof(RoomType));
         }
 
-        // Свойство для передачи ID при редактировании
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public int RoomId
         {
             set
             {
                 _roomId = value;
-                // Загружаем данные в поля (заглушка вернет тестовый объект)
                 var room = _roomRepository.ReadRoomById(value);
                 textBoxAddress.Text = room.Address;
                 numericUpDownArea.Value = (decimal)room.Area;
@@ -41,13 +37,11 @@ namespace RepairCostApp.Forms
         {
             try
             {
-                // Проверка на пустые поля (валидация)
                 if (string.IsNullOrWhiteSpace(textBoxAddress.Text))
                 {
                     throw new Exception("Введите адрес помещения.");
                 }
 
-                // Создаем объект через статический метод
                 var room = Room.CreateEntity(
                     _roomId ?? 0,
                     textBoxAddress.Text,
@@ -55,7 +49,6 @@ namespace RepairCostApp.Forms
                     (RoomType)comboBoxType.SelectedItem!
                 );
 
-                // Сохраняем
                 if (_roomId.HasValue)
                 {
                     _roomRepository.UpdateRoom(room);
@@ -65,7 +58,7 @@ namespace RepairCostApp.Forms
                     _roomRepository.CreateRoom(room);
                 }
 
-                this.DialogResult = DialogResult.OK; // Сообщаем, что всё сохранилось
+                this.DialogResult = DialogResult.OK; 
                 this.Close();
             }
             catch (Exception ex)

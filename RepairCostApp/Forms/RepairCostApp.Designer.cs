@@ -1,4 +1,7 @@
-﻿namespace RepairCostApp.Forms
+﻿using System;
+using System.Windows.Forms;
+
+namespace RepairCostApp.Forms
 {
     partial class MainForm
     {
@@ -9,10 +12,12 @@
         private ToolStripMenuItem directoryToolStripMenuItem;
         private ToolStripMenuItem roomsToolStripMenuItem;
         private ToolStripMenuItem contractorsToolStripMenuItem;
+        private ToolStripMenuItem costArticlesToolStripMenuItem; 
 
         // Операции
         private ToolStripMenuItem operationsToolStripMenuItem;
         private ToolStripMenuItem repairWorksToolStripMenuItem;
+        private ToolStripMenuItem estimatesToolStripMenuItem; 
 
         // Отчеты
         private ToolStripMenuItem reportsToolStripMenuItem;
@@ -26,8 +31,6 @@
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
-
         private void InitializeComponent()
         {
             this.menuStrip1 = new MenuStrip();
@@ -35,9 +38,11 @@
             this.directoryToolStripMenuItem = new ToolStripMenuItem();
             this.roomsToolStripMenuItem = new ToolStripMenuItem();
             this.contractorsToolStripMenuItem = new ToolStripMenuItem();
+            this.costArticlesToolStripMenuItem = new ToolStripMenuItem(); 
 
             this.operationsToolStripMenuItem = new ToolStripMenuItem();
             this.repairWorksToolStripMenuItem = new ToolStripMenuItem();
+            this.estimatesToolStripMenuItem = new ToolStripMenuItem(); 
 
             this.reportsToolStripMenuItem = new ToolStripMenuItem();
 
@@ -57,7 +62,8 @@
             // directoryToolStripMenuItem (Справочники)
             this.directoryToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] {
             this.roomsToolStripMenuItem,
-            this.contractorsToolStripMenuItem});
+            this.contractorsToolStripMenuItem,
+            this.costArticlesToolStripMenuItem}); 
             this.directoryToolStripMenuItem.Name = "directoryToolStripMenuItem";
             this.directoryToolStripMenuItem.Text = "Справочники";
 
@@ -71,9 +77,15 @@
             this.contractorsToolStripMenuItem.Text = "Подрядчики";
             this.contractorsToolStripMenuItem.Click += new EventHandler(this.ContractorsToolStripMenuItem_Click);
 
+            // costArticlesToolStripMenuItem (Статьи затрат)
+            this.costArticlesToolStripMenuItem.Name = "costArticlesToolStripMenuItem";
+            this.costArticlesToolStripMenuItem.Text = "Статьи затрат";
+            this.costArticlesToolStripMenuItem.Click += new EventHandler(this.CostArticlesToolStripMenuItem_Click);
+
             // operationsToolStripMenuItem (Операции)
             this.operationsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] {
-            this.repairWorksToolStripMenuItem});
+            this.repairWorksToolStripMenuItem,
+            this.estimatesToolStripMenuItem});
             this.operationsToolStripMenuItem.Name = "operationsToolStripMenuItem";
             this.operationsToolStripMenuItem.Text = "Операции";
 
@@ -82,7 +94,12 @@
             this.repairWorksToolStripMenuItem.Text = "Ремонтные работы";
             this.repairWorksToolStripMenuItem.Click += new EventHandler(this.RepairWorksToolStripMenuItem_Click);
 
-            // reportsToolStripMenuItem (Отчеты - пустые)
+            // estimatesToolStripMenuItem (Сметы)
+            this.estimatesToolStripMenuItem.Name = "estimatesToolStripMenuItem";
+            this.estimatesToolStripMenuItem.Text = "Сметы";
+            this.estimatesToolStripMenuItem.Click += new EventHandler(this.EstimatesToolStripMenuItem_Click);
+
+            // reportsToolStripMenuItem (Отчеты)
             this.reportsToolStripMenuItem.Name = "reportsToolStripMenuItem";
             this.reportsToolStripMenuItem.Text = "Отчеты";
 
@@ -99,7 +116,5 @@
             this.ResumeLayout(false);
             this.PerformLayout();
         }
-
-        #endregion
     }
 }

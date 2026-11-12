@@ -19,7 +19,6 @@ namespace RepairCostApp.Forms
             InitializeComponent();
             _workRepository = workRepository;
 
-            // Заполняем ComboBox-ы данными из справочников (пока заглушки пустые)
             comboBoxRoom.DataSource = roomRepository.ReadRooms();
             comboBoxRoom.DisplayMember = "Address";
             comboBoxRoom.ValueMember = "Id";
@@ -32,7 +31,6 @@ namespace RepairCostApp.Forms
             comboBoxArticle.DisplayMember = "Name";
             comboBoxArticle.ValueMember = "Id";
 
-            // Заполняем CheckedListBox категориями (флаговое перечисление)
             foreach (var val in Enum.GetValues(typeof(WorkCategory)))
             {
                 checkedListBoxCategory.Items.Add(val);
@@ -43,11 +41,10 @@ namespace RepairCostApp.Forms
         {
             try
             {
-                // Проверки на пустые значения
+                
                 if (comboBoxRoom.SelectedIndex < 0 || comboBoxContractor.SelectedIndex < 0 || comboBoxArticle.SelectedIndex < 0)
                     throw new Exception("Выберите значения во всех выпадающих списках.");
 
-                // Собираем выбранные категории (флаговое перечисление)
                 WorkCategory category = WorkCategory.None;
                 foreach (var item in checkedListBoxCategory.CheckedItems)
                 {
@@ -57,7 +54,6 @@ namespace RepairCostApp.Forms
                 if (category == WorkCategory.None)
                     throw new Exception("Выберите хотя бы одну категорию работ.");
 
-                // Создаем объект
                 var work = RepairWork.CreateOperation(
                     0,
                     dateTimePickerDate.Value,
