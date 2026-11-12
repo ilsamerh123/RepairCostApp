@@ -1,4 +1,7 @@
-﻿using RepairCostApp.Entities;
+﻿using Microsoft.Extensions.Logging;
+using RepairCostApp.Data;
+using RepairCostApp.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,29 +9,50 @@ namespace RepairCostApp.Repositories.Implementations
 {
     internal class RoomRepository : IRoomRepository
     {
-        
-        private static readonly List<Room> _rooms = new List<Room>();
-        private static int _nextId = 1;
+        private readonly DataContext _context;
+        private readonly ILogger<RoomRepository> _logger;
 
-        public IEnumerable<Room> ReadRooms() => _rooms;
-        public Room ReadRoomById(int id) => _rooms.FirstOrDefault(r => r.Id == id);
+        public RoomRepository(DataContext context, ILogger<RoomRepository> logger)
+        {
+            _context = context;
+            _logger = logger;
+        }
+
+        public IEnumerable<Room> ReadRooms()
+        {
+            _logger.LogInformation("Получение списка всех помещений");
+            return _context.Rooms.ToList();
+        }
+
+        public Room ReadRoomById(int id)
+        {
+            _logger.LogInformation("Поиск помещения по ID: {Id}", id);
+            return _context.Rooms.FirstOrDefault(r => r.Id == id);
+        }
 
         public void CreateRoom(Room room)
         {
-            var newRoom = Room.CreateEntity(_nextId++, room.Address, room.Area, room.Type);
-            _rooms.Add(newRoom);
+            _logger.LogInformation("Добавление нового помещения: {Address}", room.Address);
+            _context.Rooms.Add(room);
+            _context.SaveChanges();
         }
 
         public void UpdateRoom(Room room)
         {
-            var index = _rooms.FindIndex(r => r.Id == room.Id);
-            if (index != -1) _rooms[index] = room;
+            _logger.LogInformation("Обновление помещения с ID: {Id}", room.Id);
+            _context.Rooms.Update(room);
+            _context.SaveChanges();
         }
 
         public void DeleteRoom(int id)
         {
-            var room = _rooms.FirstOrDefault(r => r.Id == id);
-            if (room != null) _rooms.Remove(room);
+            _logger.LogInformation("Удаление помещения с ID: {Id}", id);
+            var room = _context.Rooms.FirstOrDefault(r => r.Id == id);
+            if (room != null)
+            {
+                _context.Rooms.Remove(room);
+                _context.SaveChanges();
+            }
         }
     }
 }
