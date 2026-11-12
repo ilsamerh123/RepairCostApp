@@ -5,11 +5,13 @@ namespace RepairCostApp.Entities
 {
     public class Estimate
     {
-        public int Id { get; private set; }
-        public DateTime Date { get; private set; }
-        public decimal TotalAmount { get; private set; }
-        public int RoomId { get; private set; }
-        public List<EstimateItem> Items { get; private set; } = new List<EstimateItem>();
+        public int Id { get; set; }
+        public DateTime Date { get; set; }
+        public decimal TotalAmount { get; set; }
+        public int RoomId { get; set; }
+        public List<EstimateItem> Items { get; set; } = new List<EstimateItem>();
+
+        public Estimate() { }
 
         public static Estimate CreateOperation(int id, DateTime date, decimal totalAmount, int roomId)
         {

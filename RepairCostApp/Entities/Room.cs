@@ -4,10 +4,12 @@ namespace RepairCostApp.Entities
 {
     public class Room
     {
-        public int Id { get; private set; }
-        public string Address { get; private set; } = string.Empty;
-        public double Area { get; private set; }
-        public RoomType Type { get; private set; }
+        public int Id { get; set; }
+        public string Address { get; set; } = string.Empty;
+        public double Area { get; set; }
+        public RoomType Type { get; set; }
+
+        public Room() { }
 
         public static Room CreateEntity(int id, string address, double area, RoomType type)
         {

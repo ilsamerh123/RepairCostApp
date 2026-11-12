@@ -2,10 +2,12 @@
 {
     public class Contractor
     {
-        public int Id { get; private set; }
-        public string Name { get; private set; } = string.Empty;
-        public string INN { get; private set; } = string.Empty;
-        public string Phone { get; private set; } = string.Empty;
+        public int Id { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string INN { get; set; } = string.Empty;
+        public string Phone { get; set; } = string.Empty;
+
+        public Contractor() { }
 
         public static Contractor CreateEntity(int id, string name, string inn, string phone)
         {

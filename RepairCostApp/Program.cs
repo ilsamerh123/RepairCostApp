@@ -2,6 +2,7 @@ using RepairCostApp.Forms;
 using RepairCostApp.Repositories;
 using RepairCostApp.Repositories.Implementations;
 using Unity;
+using RepairCostApp.Data;
 
 namespace RepairCostApp
 {
@@ -20,6 +21,7 @@ namespace RepairCostApp
         private static IUnityContainer CreateContainer()
         {
             var container = new UnityContainer();
+            container.RegisterType<DataContext>();
 
             container.RegisterType<IRoomRepository, RoomRepository>();
             container.RegisterType<IContractorRepository, ContractorRepository>();
