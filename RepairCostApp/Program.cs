@@ -1,17 +1,33 @@
+using RepairCostApp.Forms; 
+using RepairCostApp.Repositories;
+using RepairCostApp.Repositories.Implementations;
+using Unity;
+
 namespace RepairCostApp
 {
     internal static class Program
     {
-        /// <summary>
-        ///  The main entry point for the application.
-        /// </summary>
         [STAThread]
         static void Main()
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new Form1());
+
+            var container = CreateContainer();
+
+            Application.Run(container.Resolve<MainForm>());
+        }
+
+        private static IUnityContainer CreateContainer()
+        {
+            var container = new UnityContainer();
+
+            container.RegisterType<IRoomRepository, RoomRepository>();
+            container.RegisterType<IContractorRepository, ContractorRepository>();
+            container.RegisterType<ICostArticleRepository, CostArticleRepository>();
+            container.RegisterType<IRepairWorkRepository, RepairWorkRepository>();
+            container.RegisterType<IEstimateRepository, EstimateRepository>();
+
+            return container;
         }
     }
 }
