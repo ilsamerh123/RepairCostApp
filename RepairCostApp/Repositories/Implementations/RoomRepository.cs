@@ -1,7 +1,7 @@
 ﻿using RepairCostApp.Data;
 using RepairCostApp.Entities;
-using RepairCostApp.Entities.Enums;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace RepairCostApp.Repositories.Implementations
 {

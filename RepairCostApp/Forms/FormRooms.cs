@@ -26,6 +26,7 @@ namespace RepairCostApp.Forms
         {
             try
             {
+                dataGridViewData.DataSource = null; 
                 dataGridViewData.DataSource = _roomRepository.ReadRooms();
             }
             catch (Exception ex)
