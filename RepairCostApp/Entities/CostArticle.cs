@@ -1,9 +1,19 @@
-﻿namespace RepairCostApp.Entities
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace RepairCostApp.Entities
 {
     public class CostArticle
     {
+        [Key]
         public int Id { get; set; }
+
+        [Required]
+        [Column("name")]
         public string Name { get; set; } = string.Empty;
+
+        [Required]
+        [Column("unit")]
         public string Unit { get; set; } = string.Empty;
 
         public CostArticle() { }

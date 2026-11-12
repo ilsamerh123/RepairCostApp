@@ -25,6 +25,7 @@
     <PackageReference Include="Serilog.Settings.Configuration" Version="9.0.0" />
     <PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
     <PackageReference Include="Unity" Version="5.11.10" />
+    <PackageReference Include="Unity.Microsoft.Logging" Version="5.11.1" />
   </ItemGroup>
 
   <ItemGroup>

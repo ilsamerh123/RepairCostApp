@@ -32,15 +32,18 @@ namespace RepairCostApp.Migrations
 
                     b.Property<string>("INN")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("inn");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("name");
 
                     b.Property<string>("Phone")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("phone");
 
                     b.HasKey("Id");
 
@@ -57,11 +60,13 @@ namespace RepairCostApp.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("name");
 
                     b.Property<string>("Unit")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("unit");
 
                     b.HasKey("Id");
 
@@ -77,15 +82,20 @@ namespace RepairCostApp.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("Date")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("date");
 
                     b.Property<int>("RoomId")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("roomid");
 
                     b.Property<decimal>("TotalAmount")
-                        .HasColumnType("numeric");
+                        .HasColumnType("numeric")
+                        .HasColumnName("totalamount");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("RoomId");
 
                     b.ToTable("Estimates");
                 });
@@ -99,14 +109,12 @@ namespace RepairCostApp.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("EstimateId")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("estimateid");
 
                     b.Property<int>("RepairWorkId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("WorkName")
-                        .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("integer")
+                        .HasColumnName("repairworkid");
 
                     b.HasKey("Id");
 
@@ -124,27 +132,40 @@ namespace RepairCostApp.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("Category")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("category");
 
                     b.Property<int>("ContractorId")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("contractorid");
 
                     b.Property<int>("CostArticleId")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("costarticleid");
 
                     b.Property<DateTime>("Date")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("date");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("numeric");
+                        .HasColumnType("numeric")
+                        .HasColumnName("price");
 
                     b.Property<double>("Quantity")
-                        .HasColumnType("double precision");
+                        .HasColumnType("double precision")
+                        .HasColumnName("quantity");
 
                     b.Property<int>("RoomId")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("roomid");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ContractorId");
+
+                    b.HasIndex("CostArticleId");
+
+                    b.HasIndex("RoomId");
 
                     b.ToTable("RepairWorks");
                 });
@@ -159,17 +180,29 @@ namespace RepairCostApp.Migrations
 
                     b.Property<string>("Address")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("address");
 
                     b.Property<double>("Area")
-                        .HasColumnType("double precision");
+                        .HasColumnType("double precision")
+                        .HasColumnName("area");
 
                     b.Property<int>("Type")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("type");
 
                     b.HasKey("Id");
 
                     b.ToTable("Rooms");
+                });
+
+            modelBuilder.Entity("RepairCostApp.Entities.Estimate", b =>
+                {
+                    b.HasOne("RepairCostApp.Entities.Room", null)
+                        .WithMany()
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("RepairCostApp.Entities.EstimateItem", b =>
@@ -178,6 +211,27 @@ namespace RepairCostApp.Migrations
                         .WithMany("Items")
                         .HasForeignKey("EstimateId")
                         .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("RepairCostApp.Entities.RepairWork", b =>
+                {
+                    b.HasOne("RepairCostApp.Entities.Contractor", null)
+                        .WithMany()
+                        .HasForeignKey("ContractorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("RepairCostApp.Entities.CostArticle", null)
+                        .WithMany()
+                        .HasForeignKey("CostArticleId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("RepairCostApp.Entities.Room", null)
+                        .WithMany()
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 

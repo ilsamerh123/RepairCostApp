@@ -23,12 +23,35 @@ namespace RepairCostApp.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // Настройка связи многие-ко-многим для Сметы и Элементов сметы
             modelBuilder.Entity<Estimate>()
                 .HasMany(e => e.Items)
                 .WithOne()
                 .HasForeignKey(i => i.EstimateId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<RepairWork>()
+                .HasOne<Room>()
+                .WithMany()
+                .HasForeignKey(w => w.RoomId)
+                .OnDelete(DeleteBehavior.Restrict); 
+
+            modelBuilder.Entity<RepairWork>()
+                .HasOne<Contractor>()
+                .WithMany()
+                .HasForeignKey(w => w.ContractorId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<RepairWork>()
+                .HasOne<CostArticle>()
+                .WithMany()
+                .HasForeignKey(w => w.CostArticleId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Estimate>()
+                .HasOne<Room>()
+                .WithMany()
+                .HasForeignKey(e => e.RoomId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

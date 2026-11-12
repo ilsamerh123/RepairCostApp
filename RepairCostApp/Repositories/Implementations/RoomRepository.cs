@@ -1,5 +1,7 @@
-﻿using RepairCostApp.Data;
+﻿using Microsoft.Extensions.Logging;
+using RepairCostApp.Data;
 using RepairCostApp.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,39 +10,43 @@ namespace RepairCostApp.Repositories.Implementations
     internal class RoomRepository : IRoomRepository
     {
         private readonly DataContext _context;
+        private readonly ILogger<RoomRepository> _logger;
 
-        // Внедряем DataContext через конструктор
-        public RoomRepository(DataContext context)
+        public RoomRepository(DataContext context, ILogger<RoomRepository> logger)
         {
             _context = context;
+            _logger = logger;
         }
+
         public IEnumerable<Room> ReadRooms()
         {
-            // Читаем все помещения из БД
+            _logger.LogInformation("Получение списка всех помещений");
             return _context.Rooms.ToList();
         }
+
         public Room ReadRoomById(int id)
         {
-            // Ищем помещение по ID
+            _logger.LogInformation("Поиск помещения по ID: {Id}", id);
             return _context.Rooms.FirstOrDefault(r => r.Id == id);
         }
+
         public void CreateRoom(Room room)
         {
-            // Добавляем в контекст и сохраняем в БД
+            _logger.LogInformation("Добавление нового помещения: {Address}", room.Address);
             _context.Rooms.Add(room);
             _context.SaveChanges();
         }
 
         public void UpdateRoom(Room room)
         {
-            // Обновляем запись в БД
+            _logger.LogInformation("Обновление помещения с ID: {Id}", room.Id);
             _context.Rooms.Update(room);
             _context.SaveChanges();
         }
 
         public void DeleteRoom(int id)
         {
-            // Находим и удаляем
+            _logger.LogInformation("Удаление помещения с ID: {Id}", id);
             var room = _context.Rooms.FirstOrDefault(r => r.Id == id);
             if (room != null)
             {
