@@ -15,7 +15,8 @@ namespace RepairCostApp.Repositories.Implementations
         }
         public IEnumerable<Contractor> ReadContractors() => _context.Contractors.ToList();
 
-        public Contractor ReadContractorById(int id) => _context.Contractors.FirstOrDefault(c => c.Id == id);
+        public Contractor ReadContractorById(int id) => _context.Contractors.FirstOrDefault(c => c.Id == id) ?? throw new Exception($"Подрядчик с ID {id} не найден");
+
         public void CreateContractor(Contractor contractor)
         {
             _context.Contractors.Add(contractor);
@@ -24,9 +25,14 @@ namespace RepairCostApp.Repositories.Implementations
 
         public void UpdateContractor(Contractor contractor)
         {
-            _context.Contractors.Update(contractor);
+            var existing = _context.Contractors.Find(contractor.Id);
+            if (existing is null)
+                throw new Exception($"Подрядчик с ID {contractor.Id} не найден");
+
+            _context.Entry(existing).CurrentValues.SetValues(contractor);
             _context.SaveChanges();
         }
+
 
         public void DeleteContractor(int id)
         {

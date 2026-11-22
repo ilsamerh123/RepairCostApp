@@ -23,27 +23,35 @@ namespace RepairCostApp.Repositories.Implementations
 
         public Room ReadRoomById(int id)
         {
-            _logger.LogInformation("Поиск помещения по ID: {Id}", id);
-            return _context.Rooms.FirstOrDefault(r => r.Id == id);
+            _logger.LogInformation($"Поиск помещения по ID: {id}", id);
+
+            return _context.Rooms.FirstOrDefault(r => r.Id == id)
+                ?? throw new Exception($"Помещение с ID {id} не найдено");
         }
+
 
         public void CreateRoom(Room room)
         {
-            _logger.LogInformation("Добавление нового помещения: {Address}", room.Address);
+            _logger.LogInformation($"Добавление нового помещения: {room.Address}", room.Address);
             _context.Rooms.Add(room);
             _context.SaveChanges();
         }
 
         public void UpdateRoom(Room room)
         {
-            _logger.LogInformation("Обновление помещения с ID: {Id}", room.Id);
-            _context.Rooms.Update(room);
+            _logger.LogInformation($"Обновление помещения с ID: {room.Id}", room.Id);
+
+            var existing = _context.Rooms.Find(room.Id);
+            if (existing is null)
+                throw new Exception($"Помещение с ID {room.Id} не найдено");
+            _context.Entry(existing).CurrentValues.SetValues(room);
             _context.SaveChanges();
         }
 
+
         public void DeleteRoom(int id)
         {
-            _logger.LogInformation("Удаление помещения с ID: {Id}", id);
+            _logger.LogInformation($"Удаление помещения с ID: {id}", id);
             var room = _context.Rooms.FirstOrDefault(r => r.Id == id);
             if (room != null)
             {
