@@ -53,7 +53,7 @@ namespace RepairCostApp.Forms
             {
                 var form = _container.Resolve<FormContractorEdit>();
                 form.ContractorId = findId;
-                if (form.ShowDialog() != DialogResult.OK)
+                if (form.ShowDialog() == DialogResult.OK)
                     LoadList();
             }
             catch (Exception ex) { MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error); }

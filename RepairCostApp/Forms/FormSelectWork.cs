@@ -1,18 +1,22 @@
 ﻿using RepairCostApp.Repositories;
 using RepairCostApp.Entities;
 using System;
+using System.Linq; 
 using System.Windows.Forms;
 
 namespace RepairCostApp.Forms
 {
     public partial class FormSelectWork : Form
     {
-        public RepairWork SelectedWork { get; private set; }
+        private readonly IRepairWorkRepository _workRepository;
+
+        public RepairWork? SelectedWork { get; private set; } 
 
         public FormSelectWork(IRepairWorkRepository workRepository)
         {
             InitializeComponent();
-            dataGridViewWorks.DataSource = workRepository.ReadRepairWorks();
+            _workRepository = workRepository ?? throw new ArgumentNullException(nameof(workRepository));
+            dataGridViewWorks.DataSource = _workRepository.ReadRepairWorks();
         }
 
         private void ButtonSelect_Click(object sender, EventArgs e)
@@ -22,9 +26,16 @@ namespace RepairCostApp.Forms
                 MessageBox.Show("Выберите работу", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+
             int id = Convert.ToInt32(dataGridViewWorks.SelectedRows[0].Cells["Id"].Value);
 
-            SelectedWork = RepairWork.CreateOperation(id, DateTime.Now, 1, 100, Entities.Enums.WorkCategory.None, 1, 1, 1);
+            SelectedWork = _workRepository.ReadRepairWorks().FirstOrDefault(w => w.Id == id);
+
+            if (SelectedWork == null)
+            {
+                MessageBox.Show("Работа не найдена в базе данных", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
             this.DialogResult = DialogResult.OK;
             this.Close();
