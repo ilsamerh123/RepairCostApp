@@ -19,7 +19,6 @@ namespace RepairCostApp.Repositories.Implementations
         public IEnumerable<Estimate> ReadEstimates(DateTime? dateFrom = null, DateTime? dateTo = null)
         {
             _logger.LogInformation("Получение списка смет");
-            // Include(e => e.Items) подтягивает связанные работы из БД
             var query = _context.Estimates.Include(e => e.Items).AsQueryable();
 
             if (dateFrom.HasValue) query = query.Where(e => e.Date >= dateFrom.Value);

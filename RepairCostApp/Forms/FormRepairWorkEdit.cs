@@ -56,7 +56,7 @@ namespace RepairCostApp.Forms
 
                 var work = RepairWork.CreateOperation(
                     0,
-                    dateTimePickerDate.Value,
+                    dateTimePickerDate.Value.ToUniversalTime(),
                     (double)numericUpDownQuantity.Value,
                     numericUpDownPrice.Value,
                     category,

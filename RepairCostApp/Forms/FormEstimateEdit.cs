@@ -56,7 +56,7 @@ namespace RepairCostApp.Forms
 
                 var estimate = Estimate.CreateOperation(
                     0,
-                    dateTimePickerDate.Value,
+                    dateTimePickerDate.Value.ToUniversalTime(),
                     total,
                     (int)comboBoxRoom.SelectedValue!
                 );

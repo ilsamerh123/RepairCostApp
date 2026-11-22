@@ -1,9 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using RepairCostApp.Data;
 using RepairCostApp.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace RepairCostApp.Repositories.Implementations
 {
