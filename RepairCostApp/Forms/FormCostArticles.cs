@@ -1,7 +1,4 @@
-﻿using System;
-using System.Windows.Forms;
-using RepairCostApp.Repositories;
-using RepairCostApp.Repositories.Implementations;
+﻿using RepairCostApp.Repositories;
 using Unity;
 
 namespace RepairCostApp.Forms
@@ -24,8 +21,13 @@ namespace RepairCostApp.Forms
         {
             try
             {
+                var articles = _articleRepository.ReadCostArticles().ToList();
+
+                var bindingSource = new BindingSource();
+                bindingSource.DataSource = articles;
+
                 dataGridViewData.DataSource = null;
-                dataGridViewData.DataSource = _articleRepository.ReadCostArticles();
+                dataGridViewData.DataSource = bindingSource;
             }
             catch (Exception ex)
             {

@@ -37,9 +37,17 @@ namespace RepairCostApp.Forms
 
         private void UpdateGrid()
         {
-            
             dataGridViewItems.DataSource = null;
-            dataGridViewItems.DataSource = _selectedWorks;
+            dataGridViewItems.DataSource = _selectedWorks
+                .Select(w => new
+                {
+                    w.Id,
+                    w.Date,
+                    w.Quantity,
+                    w.Price,
+                    Category = w.Category.ToString()
+                })
+                .ToList();
         }
 
         private void ButtonSave_Click(object sender, EventArgs e)
@@ -61,7 +69,9 @@ namespace RepairCostApp.Forms
                     (int)comboBoxRoom.SelectedValue!
                 );
 
-                var items = _selectedWorks.Select(w => EstimateItem.CreateElement(0, 0, w.Id)).ToList();
+                var items = _selectedWorks
+                    .Select(w => EstimateItem.CreateElement(0, 0, w.Id))
+                    .ToList();
 
                 _estimateRepository.CreateEstimate(estimate, items);
 

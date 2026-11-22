@@ -26,8 +26,13 @@ namespace RepairCostApp.Forms
         {
             try
             {
-                dataGridViewData.DataSource = null; 
-                dataGridViewData.DataSource = _roomRepository.ReadRooms();
+                var rooms = _roomRepository.ReadRooms().ToList(); 
+
+                var bindingSource = new BindingSource();
+                bindingSource.DataSource = rooms;
+
+                dataGridViewData.DataSource = null;
+                dataGridViewData.DataSource = bindingSource;
             }
             catch (Exception ex)
             {
