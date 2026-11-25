@@ -1,8 +1,6 @@
 ﻿using RepairCostApp.Repositories;
 using RepairCostApp.Entities;
 using RepairCostApp.Entities.Enums;
-using System;
-using System.Windows.Forms;
 
 namespace RepairCostApp.Forms
 {

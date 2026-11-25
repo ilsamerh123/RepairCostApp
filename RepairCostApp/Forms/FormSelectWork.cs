@@ -1,22 +1,18 @@
 ﻿using RepairCostApp.Repositories;
 using RepairCostApp.Entities;
-using System;
-using System.Linq; 
-using System.Windows.Forms;
-
 namespace RepairCostApp.Forms
 {
     public partial class FormSelectWork : Form
     {
         private readonly IRepairWorkRepository _workRepository;
 
-        public RepairWork? SelectedWork { get; private set; } 
+        public RepairWork? SelectedWork { get; private set; }
 
-        public FormSelectWork(IRepairWorkRepository workRepository)
+        public FormSelectWork(IRepairWorkRepository workRepository, int roomId)
         {
             InitializeComponent();
-            _workRepository = workRepository ?? throw new ArgumentNullException(nameof(workRepository));
-            dataGridViewWorks.DataSource = _workRepository.ReadRepairWorks();
+            _workRepository = workRepository;
+            dataGridViewWorks.DataSource = _workRepository.ReadRepairWorks().Where(w => w.RoomId == roomId).ToList();
         }
 
         private void ButtonSelect_Click(object sender, EventArgs e)

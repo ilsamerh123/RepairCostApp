@@ -33,25 +33,25 @@ namespace RepairCostApp.Data
                 .HasOne<Room>()
                 .WithMany()
                 .HasForeignKey(w => w.RoomId)
-                .OnDelete(DeleteBehavior.Restrict); 
+                .OnDelete(DeleteBehavior.Cascade); 
 
             modelBuilder.Entity<RepairWork>()
                 .HasOne<Contractor>()
                 .WithMany()
                 .HasForeignKey(w => w.ContractorId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<RepairWork>()
                 .HasOne<CostArticle>()
                 .WithMany()
                 .HasForeignKey(w => w.CostArticleId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Estimate>()
                 .HasOne<Room>()
                 .WithMany()
                 .HasForeignKey(e => e.RoomId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

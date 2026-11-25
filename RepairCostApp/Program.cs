@@ -5,7 +5,6 @@ using RepairCostApp.Forms;
 using RepairCostApp.Repositories;
 using RepairCostApp.Repositories.Implementations;
 using Serilog;
-using Serilog.Extensions.Logging;
 using Unity;
 using Unity.Microsoft.Logging;
 

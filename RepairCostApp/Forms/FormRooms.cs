@@ -1,7 +1,5 @@
 ﻿using RepairCostApp.Repositories;
 using Unity;
-using System;
-using System.Windows.Forms;
 
 namespace RepairCostApp.Forms
 {

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Windows.Forms;
-using RepairCostApp.Repositories;
-using RepairCostApp.Repositories.Implementations;
+﻿using RepairCostApp.Repositories;
 using Unity;
 
 namespace RepairCostApp.Forms

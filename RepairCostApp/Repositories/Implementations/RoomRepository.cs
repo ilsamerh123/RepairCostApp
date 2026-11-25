@@ -18,17 +18,10 @@ namespace RepairCostApp.Repositories.Implementations
         public IEnumerable<Room> ReadRooms()
         {
             _logger.LogInformation("Получение списка всех помещений");
-            return _context.Rooms.ToList();
+            return _context.Rooms.OrderBy(r => r.Id).ToList();
         }
 
-        public Room ReadRoomById(int id)
-        {
-            _logger.LogInformation($"Поиск помещения по ID: {id}", id);
-
-            return _context.Rooms.FirstOrDefault(r => r.Id == id)
-                ?? throw new Exception($"Помещение с ID {id} не найдено");
-        }
-
+        public Room ReadRoomById(int id) => _context.Rooms.FirstOrDefault(r => r.Id == id) ?? throw new Exception($"Помещение с ID {id} не найдено");
 
         public void CreateRoom(Room room)
         {
