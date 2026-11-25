@@ -24,15 +24,12 @@ namespace RepairCostApp.Forms
             }
 
             int id = Convert.ToInt32(dataGridViewWorks.SelectedRows[0].Cells["Id"].Value);
-
             SelectedWork = _workRepository.ReadRepairWorks().FirstOrDefault(w => w.Id == id);
-
             if (SelectedWork == null)
             {
-                MessageBox.Show("Работа не найдена в базе данных", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Работа не найдена", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-
             this.DialogResult = DialogResult.OK;
             this.Close();
         }

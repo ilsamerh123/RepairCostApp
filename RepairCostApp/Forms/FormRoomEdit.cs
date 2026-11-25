@@ -25,9 +25,12 @@ namespace RepairCostApp.Forms
             {
                 _roomId = value;
                 var room = _roomRepository.ReadRoomById(value);
-                textBoxAddress.Text = room.Address;
-                numericUpDownArea.Value = (decimal)room.Area;
-                comboBoxType.SelectedItem = room.Type;
+                if (room != null)
+                {
+                    textBoxAddress.Text = room.Address;
+                    numericUpDownArea.Value = (decimal)room.Area;
+                    comboBoxType.SelectedItem = room.Type;
+                }
             }
         }
 

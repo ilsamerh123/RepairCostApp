@@ -22,8 +22,11 @@ namespace RepairCostApp.Forms
             {
                 _articleId = value;
                 var article = _articleRepository.ReadCostArticleById(value);
-                textBoxName.Text = article.Name;
-                textBoxUnit.Text = article.Unit;
+                if (article != null)
+                {
+                    textBoxName.Text = article.Name;
+                    textBoxUnit.Text = article.Unit;
+                }
             }
         }
 

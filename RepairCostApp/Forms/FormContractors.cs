@@ -1,4 +1,4 @@
-﻿using RepairCostApp.Repositories;
+using RepairCostApp.Repositories;
 using Unity;
 
 namespace RepairCostApp.Forms
@@ -24,8 +24,13 @@ namespace RepairCostApp.Forms
         {
             try
             {
-                dataGridViewData.DataSource = null; 
-                dataGridViewData.DataSource = _contractorRepository.ReadContractors();
+                var contractors = _contractorRepository.ReadContractors().ToList();
+
+                var bindingSource = new BindingSource();
+                bindingSource.DataSource = contractors;
+
+                dataGridViewData.DataSource = null;
+                dataGridViewData.DataSource = bindingSource;
             }
             catch (Exception ex)
             {
