@@ -1,7 +1,4 @@
-using System;
-using System.Windows.Forms;
 using Unity;
-using RepairCostApp.Forms;
 
 namespace RepairCostApp.Forms
 {

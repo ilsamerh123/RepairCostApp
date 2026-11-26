@@ -1,10 +1,7 @@
-﻿using RepairCostApp.Repositories;
-using RepairCostApp.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Forms;
+﻿using RepairCostApp.Entities;
+using RepairCostApp.Repositories;
 using Unity;
+using Unity.Resolution;
 
 namespace RepairCostApp.Forms
 {
@@ -27,7 +24,15 @@ namespace RepairCostApp.Forms
 
         private void ButtonAddWork_Click(object sender, EventArgs e)
         {
-            var form = _container.Resolve<FormSelectWork>();
+            if (comboBoxRoom.SelectedIndex < 0)
+            {
+                MessageBox.Show("Сначала выберите помещение!");
+                return;
+            }
+
+            int selectedRoomId = (int)comboBoxRoom.SelectedValue!;
+            var form = _container.Resolve<FormSelectWork>(new ParameterOverride("roomId", selectedRoomId));
+
             if (form.ShowDialog() == DialogResult.OK && form.SelectedWork != null)
             {
                 _selectedWorks.Add(form.SelectedWork);
@@ -64,7 +69,7 @@ namespace RepairCostApp.Forms
 
                 var estimate = Estimate.CreateOperation(
                     0,
-                    dateTimePickerDate.Value,
+                    dateTimePickerDate.Value.ToUniversalTime(),
                     total,
                     (int)comboBoxRoom.SelectedValue!
                 );

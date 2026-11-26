@@ -1,8 +1,6 @@
 ﻿using RepairCostApp.Repositories;
 using RepairCostApp.Entities;
-using System;
 using System.ComponentModel;
-using System.Windows.Forms;
 
 namespace RepairCostApp.Forms
 {
@@ -10,6 +8,7 @@ namespace RepairCostApp.Forms
     {
         private readonly IContractorRepository _contractorRepository;
         private int? _contractorId;
+
 
         public FormContractorEdit(IContractorRepository contractorRepository)
         {

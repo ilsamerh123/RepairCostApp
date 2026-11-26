@@ -1,11 +1,25 @@
-﻿namespace RepairCostApp.Entities
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace RepairCostApp.Entities
 {
     public class Contractor
     {
-        public int Id { get; private set; }
-        public string Name { get; private set; } = string.Empty;
-        public string INN { get; private set; } = string.Empty;
-        public string Phone { get; private set; } = string.Empty;
+        [Key]
+        public int Id { get; set; }
+
+        [Required]
+        [Column("name")]
+        public string Name { get; set; } = string.Empty;
+
+        [Required]
+        [Column("inn")]
+        public string INN { get; set; } = string.Empty;
+
+        [Column("phone")]
+        public string Phone { get; set; } = string.Empty;
+
+        public Contractor() { }
 
         public static Contractor CreateEntity(int id, string name, string inn, string phone)
         {

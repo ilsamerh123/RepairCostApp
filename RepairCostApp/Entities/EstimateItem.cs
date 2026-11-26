@@ -1,11 +1,25 @@
-﻿namespace RepairCostApp.Entities
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace RepairCostApp.Entities
 {
     public class EstimateItem
     {
-        public int Id { get; private set; }
-        public int EstimateId { get; private set; }
-        public int RepairWorkId { get; private set; }
-        public string WorkName { get; private set; } = string.Empty;
+        [Key]
+        public int Id { get; set; }
+
+        [Required]
+        [Column("estimateid")]
+        public int EstimateId { get; set; }
+
+        [Required]
+        [Column("repairworkid")]
+        public int RepairWorkId { get; set; }
+
+        [NotMapped]
+        public string WorkName { get; set; } = string.Empty;
+
+        public EstimateItem() { }
 
         public static EstimateItem CreateElement(int id, int estimateId, int repairWorkId)
         {
