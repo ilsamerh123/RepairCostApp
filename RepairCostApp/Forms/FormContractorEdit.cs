@@ -9,6 +9,7 @@ namespace RepairCostApp.Forms
         private readonly IContractorRepository _contractorRepository;
         private int? _contractorId;
 
+
         public FormContractorEdit(IContractorRepository contractorRepository)
         {
             InitializeComponent();

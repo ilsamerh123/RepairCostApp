@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using RepairCostApp.Data;
 using RepairCostApp.Entities;
 
@@ -18,7 +19,7 @@ namespace RepairCostApp.Repositories.Implementations
         public IEnumerable<Room> ReadRooms()
         {
             _logger.LogInformation("Получение списка всех помещений");
-            return _context.Rooms.OrderBy(r => r.Id).ToList();
+            return _context.Rooms.AsNoTracking().OrderBy(r => r.Id).ToList();
         }
 
         public Room ReadRoomById(int id) => _context.Rooms.FirstOrDefault(r => r.Id == id) ?? throw new Exception($"Помещение с ID {id} не найдено");
@@ -28,6 +29,7 @@ namespace RepairCostApp.Repositories.Implementations
             _logger.LogInformation($"Добавление нового помещения: {room.Address}", room.Address);
             _context.Rooms.Add(room);
             _context.SaveChanges();
+            _context.ChangeTracker.Clear();
         }
 
         public void UpdateRoom(Room room)
@@ -39,6 +41,7 @@ namespace RepairCostApp.Repositories.Implementations
                 throw new Exception($"Помещение с ID {room.Id} не найдено");
             _context.Entry(existing).CurrentValues.SetValues(room);
             _context.SaveChanges();
+            _context.ChangeTracker.Clear();
         }
 
 
@@ -50,6 +53,7 @@ namespace RepairCostApp.Repositories.Implementations
             {
                 _context.Rooms.Remove(room);
                 _context.SaveChanges();
+                _context.ChangeTracker.Clear();
             }
         }
     }

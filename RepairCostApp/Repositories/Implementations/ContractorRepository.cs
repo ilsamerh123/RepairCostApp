@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using RepairCostApp.Data;
 using RepairCostApp.Entities;
 
@@ -14,7 +15,7 @@ namespace RepairCostApp.Repositories.Implementations
             _context = context;
             _logger = logger;
         }
-        public IEnumerable<Contractor> ReadContractors() => _context.Contractors.OrderBy(c => c.Id).ToList();
+        public IEnumerable<Contractor> ReadContractors() => _context.Contractors.AsNoTracking().OrderBy(c => c.Id).ToList();
 
         public Contractor ReadContractorById(int id) => _context.Contractors.FirstOrDefault(c => c.Id == id) ?? throw new Exception($"Подрядчик с ID {id} не найден");
 
@@ -23,6 +24,7 @@ namespace RepairCostApp.Repositories.Implementations
             _logger.LogInformation($"Добавление нового подрядчика: {contractor.Name}", contractor.Name);
             _context.Contractors.Add(contractor);
             _context.SaveChanges();
+            _context.ChangeTracker.Clear();
         }
 
         public void UpdateContractor(Contractor contractor)
@@ -34,6 +36,7 @@ namespace RepairCostApp.Repositories.Implementations
 
             _context.Entry(existing).CurrentValues.SetValues(contractor);
             _context.SaveChanges();
+            _context.ChangeTracker.Clear();
         }
 
 
@@ -45,6 +48,7 @@ namespace RepairCostApp.Repositories.Implementations
             {
                 _context.Contractors.Remove(contractor);
                 _context.SaveChanges();
+                _context.ChangeTracker.Clear();
             }
         }
     }

@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using RepairCostApp.Data;
 using RepairCostApp.Entities;
 
@@ -15,7 +16,7 @@ namespace RepairCostApp.Repositories.Implementations
             _logger = logger;
         }
 
-        public IEnumerable<CostArticle> ReadCostArticles() => _context.CostArticles.OrderBy(c => c.Id).ToList();
+        public IEnumerable<CostArticle> ReadCostArticles() => _context.CostArticles.AsNoTracking().OrderBy(c => c.Id).ToList();
         public CostArticle ReadCostArticleById(int id) => _context.CostArticles.FirstOrDefault(c => c.Id == id) ?? throw new Exception($"Статья затрат с ID {id} не найдена");
 
 
@@ -24,6 +25,7 @@ namespace RepairCostApp.Repositories.Implementations
             _logger.LogInformation($"Добавление новой статьи: {article.Name}", article.Name);
             _context.CostArticles.Add(article);
             _context.SaveChanges();
+            _context.ChangeTracker.Clear();
         }
 
         public void UpdateCostArticle(CostArticle article)
@@ -35,6 +37,7 @@ namespace RepairCostApp.Repositories.Implementations
                 throw new Exception($"Статья с ID {article.Id} не найдена");
             _context.Entry(existing).CurrentValues.SetValues(article);
             _context.SaveChanges();
+            _context.ChangeTracker.Clear();
         }
 
         public void DeleteCostArticle(int id)
@@ -45,6 +48,7 @@ namespace RepairCostApp.Repositories.Implementations
             {
                 _context.CostArticles.Remove(article);
                 _context.SaveChanges();
+                _context.ChangeTracker.Clear();
             }
         }
     }
